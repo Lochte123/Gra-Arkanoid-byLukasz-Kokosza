@@ -35,7 +35,7 @@ public class Paletka
 	
 	public void RysujP(Graphics rysuj)
 	{
-		rysuj.setColor(new Color(30,0,5,150));
+		rysuj.setColor(new Color(30,0,5,120));
 		rysuj.fillRect(kladka.x,kladka.y,kladka.width,kladka.height);
 		rysuj.setColor(new Color(255,255,255));
 		rysuj.drawRect(kladka.x,kladka.y,kladka.width,kladka.height);

@@ -24,6 +24,8 @@ public class Gra extends JPanel
 	Kulka kulka, kulka2,kulka3;
 	BufferedImage tlo;	
 	Main main;
+	Klient socketKlient;
+	Serwer socketSerwer;
 	
 	public static int ruch_w_prawo = 10;
 	public static int ruch_w_lewo = -10;
@@ -103,6 +105,8 @@ public class Gra extends JPanel
 		}
 		
 		try{ tlo = ImageIO.read(new File("tlo.jpg")); } catch(IOException ex){}
+		socketSerwer = new Serwer(this);
+		socketKlient = new Klient(this,"localhost");
 	}
 	
 	public void UstawPoziom()
@@ -205,6 +209,15 @@ public class Gra extends JPanel
 	public synchronized void start()
 	{
 		Pauza = false;
+
+		if(JOptionPane.showConfirmDialog(this, "Czy chcesz graæ sieciowo?") == 0)
+		{
+			socketSerwer.start();
+			socketKlient.start();
+			System.out.println("SUKCES! PO£¥CZONO SERWER Z KLIENTEM, INFORMACJE: ");
+			socketKlient.wyslijDane("ping".getBytes());
+		}
+		
 		if(Run == false) 
 		{
 			gThread.start();//rozpoczecie gry
@@ -216,7 +229,7 @@ public class Gra extends JPanel
 		Pauza = true;
 	}
 	
-	public void stop()
+	public synchronized void stop()
 	{
 		Run = false;
 	}

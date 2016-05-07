@@ -22,27 +22,21 @@ import org.sqlite.*;
 import java.sql.*;
 import java.net.*;
 
-public class Klient extends Thread
+public class Serwer extends Thread
 {
-	InetAddress adresIP;
 	DatagramSocket socket;
 	Gra gra;
 	int port = 1331;
 	
-	public Klient(Gra gra, String adresIP)
+	public Serwer(Gra gra)
 	{
 		this.gra = gra;
 		
 		try
 		{
-			this.socket = new DatagramSocket();
-			this.adresIP = InetAddress.getByName(adresIP);
+			this.socket = new DatagramSocket(port);
 		}
 		catch(SocketException e)
-		{
-			e.printStackTrace();
-		}
-		catch(UnknownHostException e)
 		{
 			e.printStackTrace();
 		}
@@ -62,11 +56,17 @@ public class Klient extends Thread
 			{
 				e.printStackTrace();
 			}
-			System.out.println("Serwer = " + new String(packet.getData()));
+			String powiadomienie = new String(packet.getData());
+			System.out.println("Klient: " + " adres IP = " + packet.getAddress().getHostAddress() + " port = " + packet.getPort());
+			
+			if(powiadomienie.trim().equalsIgnoreCase("ping")) 
+			{
+				wyslijDane("Wyslane ".getBytes(), packet.getAddress(), packet.getPort());
+			}
 		}
 	}
 	
-	public void wyslijDane(byte[] dane)
+	public void wyslijDane(byte[] dane, InetAddress adresIP, int port)
 	{
 		DatagramPacket packet = new DatagramPacket(dane,dane.length, adresIP, port);
 		try
@@ -78,5 +78,4 @@ public class Klient extends Thread
 			e.printStackTrace();
 		}
 	}
-	
 }

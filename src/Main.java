@@ -65,10 +65,10 @@ public class Main extends JFrame//klasa z samym Mainem
 		label = new JLabel();
 		label.setIcon(tlo);
 			
-		button1.setPreferredSize(new Dimension(160, 60));
-		button2.setPreferredSize(new Dimension(160, 60));
-		button3.setPreferredSize(new Dimension(160, 60));
-		button4.setPreferredSize(new Dimension(160, 60));
+		button1.setSize(new Dimension(160, 60));
+		button2.setSize(new Dimension(160, 60));
+		button3.setSize(new Dimension(160, 60));
+		button4.setSize(new Dimension(100, 60));
 		
 		button1.setBackground(Color.WHITE);
 		button1.setForeground(Color.BLACK);
@@ -116,7 +116,7 @@ public class Main extends JFrame//klasa z samym Mainem
 		panel.add(button3);
 		panel.add(Box.createRigidArea(new Dimension(55,25)));
 		panel.add(button2);
-		panel.add(Box.createRigidArea(new Dimension(55,60)));
+		panel.add(Box.createRigidArea(new Dimension(55,65)));
 		panel.add(bonusy);
 		panel.add(Box.createRigidArea(new Dimension(55,25)));
 		panel.add(bonusZielony);
@@ -130,7 +130,7 @@ public class Main extends JFrame//klasa z samym Mainem
 		panel.add(predkoscKMinus);
 		panel.add(Box.createRigidArea(new Dimension(55,30)));
 		panel.add(liczPunkty);
-		panel.add(Box.createRigidArea(new Dimension(55,55)));
+		panel.add(Box.createRigidArea(new Dimension(55,60)));
 		panel.add(poziom);
 		panel.add(Box.createRigidArea(new Dimension(55,25)));
 		panel.add(latwy);
@@ -176,19 +176,6 @@ public class Main extends JFrame//klasa z samym Mainem
 		baza = "WYNIKI";
 		Connection polaczenie = bd.polacz(baza);//
 		bd.stworzTab(polaczenie, baza);
-		
-		//
-		//GRA SIECIOWA
-		//
-		System.out.println("Trwa ³¹czenie z serwerem ...");
-		int port = 7777;
-		serwer = new ServerSocket(port);
-		System.out.println("Serwer rozpoczyna dzia³anie ...");
-		socket = serwer.accept();
-		System.out.println("Po³¹czono z: " + socket.getInetAddress());
-		streamOut = new DataOutputStream(socket.getOutputStream());
-		streamOut.writeUTF("Witamy klienta na pok³adzie");
-		System.out.println("Wiadomosc wyslana.");
 
 	}
 	
